@@ -1,9 +1,6 @@
 package com.orientbits.blogappapis.services;
 
 import com.orientbits.blogappapis.payloads.UserDTO;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

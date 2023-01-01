@@ -15,9 +15,10 @@ import lombok.ToString;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String name;
+
     private String email;
     private String password;
     @Column(length = 500)

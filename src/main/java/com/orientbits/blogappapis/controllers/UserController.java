@@ -1,6 +1,6 @@
 package com.orientbits.blogappapis.controllers;
 
-import com.orientbits.blogappapis.entities.APIResponse;
+import com.orientbits.blogappapis.payloads.APIResponse;
 import com.orientbits.blogappapis.payloads.UserDTO;
 import com.orientbits.blogappapis.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")

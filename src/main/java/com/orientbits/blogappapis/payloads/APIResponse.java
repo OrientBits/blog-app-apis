@@ -1,4 +1,4 @@
-package com.orientbits.blogappapis.entities;
+package com.orientbits.blogappapis.payloads;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

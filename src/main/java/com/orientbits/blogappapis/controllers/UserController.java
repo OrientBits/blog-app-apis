@@ -3,6 +3,7 @@ package com.orientbits.blogappapis.controllers;
 import com.orientbits.blogappapis.payloads.APIResponse;
 import com.orientbits.blogappapis.payloads.UserDTO;
 import com.orientbits.blogappapis.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class UserController {
 
     //POST - create user
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         UserDTO createdUser = userService.createUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     //PUT - update user
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO,@PathVariable Integer id){
+    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO,@PathVariable Integer id){
         System.out.println(userDTO +" : "+id);
         UserDTO updateUser = userService.updateUser(userDTO, id);
         return new ResponseEntity<>(updateUser,HttpStatus.ACCEPTED);

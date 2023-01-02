@@ -1,13 +1,13 @@
 package com.orientbits.blogappapis.services;
 
-import com.orientbits.blogappapis.payloads.UserDTO;
+import com.orientbits.blogappapis.payloads.UserDto;
 
 import java.util.List;
 
 public interface UserService {
-    UserDTO createUser(UserDTO user);
-    UserDTO updateUser(UserDTO user, Integer userId);
-    UserDTO getUserById(Integer userId);
-    List<UserDTO> getAllUsers();
+    UserDto createUser(UserDto user);
+    UserDto updateUser(UserDto user, Integer userId);
+    UserDto getUserById(Integer userId);
+    List<UserDto> getAllUsers();
     void deleteUser(Integer userId);
 }

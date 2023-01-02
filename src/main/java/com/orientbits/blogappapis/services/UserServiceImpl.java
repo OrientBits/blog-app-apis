@@ -2,7 +2,7 @@ package com.orientbits.blogappapis.services;
 
 import com.orientbits.blogappapis.entities.User;
 import com.orientbits.blogappapis.exceptions.ResourceNotFoundException;
-import com.orientbits.blogappapis.payloads.UserDTO;
+import com.orientbits.blogappapis.payloads.UserDto;
 import com.orientbits.blogappapis.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserDto createUser(UserDto userDTO) {
         User newUser = userRepository.save(modelMapper.map(userDTO, User.class));
-        return modelMapper.map(newUser,UserDTO.class);
+        return modelMapper.map(newUser, UserDto.class);
     }
 
     @Override
-    public UserDTO updateUser(UserDTO userDTO, Integer userId) {
+    public UserDto updateUser(UserDto userDTO, Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 
         user.setName(userDTO.getName());
@@ -36,19 +36,19 @@ public class UserServiceImpl implements UserService{
         user.setAbout(userDTO.getAbout());
         userRepository.save(user);
 
-        return modelMapper.map(user, UserDTO.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
-    public UserDTO getUserById(Integer userId) {
+    public UserDto getUserById(Integer userId) {
         User user = this.userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User","Id",userId));
-        return modelMapper.map(user, UserDTO.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         List<User> all = userRepository.findAll();
-        return all.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+        return all.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override

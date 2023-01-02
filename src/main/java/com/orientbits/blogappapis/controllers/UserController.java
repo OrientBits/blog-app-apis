@@ -1,7 +1,7 @@
 package com.orientbits.blogappapis.controllers;
 
 import com.orientbits.blogappapis.payloads.APIResponse;
-import com.orientbits.blogappapis.payloads.UserDTO;
+import com.orientbits.blogappapis.payloads.UserDto;
 import com.orientbits.blogappapis.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,16 @@ public class UserController {
 
     //POST - create user
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
-        UserDTO createdUser = userService.createUser(userDTO);
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDTO){
+        UserDto createdUser = userService.createUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     //PUT - update user
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO,@PathVariable Integer id){
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDTO, @PathVariable Integer id){
         System.out.println(userDTO +" : "+id);
-        UserDTO updateUser = userService.updateUser(userDTO, id);
+        UserDto updateUser = userService.updateUser(userDTO, id);
         return new ResponseEntity<>(updateUser,HttpStatus.ACCEPTED);
     }
 
@@ -42,15 +42,15 @@ public class UserController {
 
     //GET - get user by id
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Integer id){
-        UserDTO userById = userService.getUserById(id);
+    public ResponseEntity<UserDto> getUser(@PathVariable Integer id){
+        UserDto userById = userService.getUserById(id);
         return new ResponseEntity<>(userById,HttpStatus.OK);
     }
 
     //GET - get all user
     @GetMapping("/")
-    public ResponseEntity<List<UserDTO>> getAllUser(){
-        List<UserDTO> allUsers = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUser(){
+        List<UserDto> allUsers = userService.getAllUsers();
         return new ResponseEntity<>(allUsers,HttpStatus.OK);
     }
 

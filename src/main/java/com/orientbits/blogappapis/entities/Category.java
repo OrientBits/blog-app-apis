@@ -1,12 +1,11 @@
 package com.orientbits.blogappapis.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -17,10 +16,14 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer categoryId;
-    @Column(name = "title",length = 100,nullable = false)
-    private String categoryTitle;
-    @Column(name = "description",length = 1000)
-    private String categoryDescription;
+    private Integer id;
+    @Column(length = 100,nullable = false)
+    private String title;
+    @Column(length = 1000)
+    private String description;
+
+
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Post> post = new ArrayList<>();
 
 }

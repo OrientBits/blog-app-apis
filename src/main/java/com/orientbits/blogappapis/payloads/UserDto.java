@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDto {
-    private int id;
 
     @NotEmpty
     @Size(min = 3, message = "Name must be min of 3 characters!")
@@ -17,7 +16,7 @@ public class UserDto {
     @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Email is not valid!")
     private String email;
     @NotEmpty
-    @Size(min = 5,max = 10,message = "Password must be min of 3 chars!")
+    @Size(min = 3,max = 10,message = "Password must be min of 3 chars!")
     private String password;
     @NotEmpty
     private String about;

@@ -31,25 +31,23 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostDto postDto, Integer categoryId, Integer userId) {
-
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "User id", userId));
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "Category id", categoryId));
-
         Post post = modelMapper.map(postDto, Post.class);
         post.setImageName("default.png");
         post.setAddedDate(new Date());
         post.setCategory(category);
         post.setUser(user);
-
         Post save = postRepository.save(post);
-
-        System.out.println("POST: "+save);
-
         return modelMapper.map(save,PostDto.class);
     }
 
     @Override
     public PostDto updatePost(PostDto postDto, Integer postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "Post id", postId));
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+
         return null;
     }
 

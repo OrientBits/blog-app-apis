@@ -14,10 +14,19 @@ public class PostController {
     @Autowired
     PostService postService;
 
+    //create post
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto, @PathVariable Integer userId, @PathVariable Integer categoryId){
         PostDto createdPost = postService.createPost(postDto, categoryId, userId);
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
+
+    //update post
+    @PutMapping("/")
+    public void updatePost(){
+
+    }
+
+
 
 }

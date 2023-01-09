@@ -3,6 +3,7 @@ package com.orientbits.blogappapis.controllers;
 import com.orientbits.blogappapis.payloads.PostDto;
 import com.orientbits.blogappapis.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+
 
     //create post
     @PostMapping("/user/{userId}/category/{categoryId}/posts")

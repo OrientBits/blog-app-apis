@@ -1,14 +1,10 @@
 package com.orientbits.blogappapis.payloads;
 
-import com.orientbits.blogappapis.entities.Category;
-import com.orientbits.blogappapis.entities.User;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.Date;
 
 
@@ -16,6 +12,8 @@ import java.util.Date;
 @Getter
 @Setter
 public class PostDto {
+
+    private Integer id;
 
     @NotEmpty
     @Size(min = 10,max = 100)
@@ -25,7 +23,7 @@ public class PostDto {
     @Size(min = 10)
     private String content;
 
-    private Date addedDate;
+    private Date date;
 
     private String imageName;
 

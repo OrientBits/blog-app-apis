@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class CategoryDto {
 
+    int id;
+
     @NotEmpty
     @Size(min = 4,message = "Min size of category title is 4")
     private String title;

@@ -10,6 +10,8 @@ import lombok.Setter;
 @Setter
 public class UserDto {
 
+
+    private Integer id;
     @NotEmpty
     @Size(min = 3, message = "Name must be min of 3 characters!")
     private String name;

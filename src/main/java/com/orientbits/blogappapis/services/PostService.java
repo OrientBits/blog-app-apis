@@ -4,6 +4,8 @@ import com.orientbits.blogappapis.entities.Category;
 import com.orientbits.blogappapis.entities.Post;
 import com.orientbits.blogappapis.entities.User;
 import com.orientbits.blogappapis.payloads.PostDto;
+import com.orientbits.blogappapis.payloads.PostResponse;
+
 import java.util.List;
 
 public interface PostService {
@@ -21,13 +23,13 @@ public interface PostService {
     PostDto getPost(Integer postId);
 
     //get all post
-    List<PostDto> getAllPost(Integer pageNo, Integer pageSize);
+    PostResponse getAllPost(Integer pageNo, Integer pageSize,String soryBy);
 
     //get all post by category
-    List<PostDto> getPostsByCategory(Integer categoryId);
+    PostResponse getPostsByCategory(Integer categoryId,Integer pageNumber, Integer pageSize);
 
     //get all post by user
-    List<PostDto> getPostsByUser(Integer userId);
+    PostResponse getPostsByUser(Integer userId,Integer pageNumber, Integer pageSize);
 
     //search post
     List<PostDto> searchPosts(String keyword);

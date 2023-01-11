@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 public class PostDto {
 
-    private Integer id;
+    private int id;
 
     @NotEmpty
     @Size(min = 10,max = 100)

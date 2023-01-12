@@ -16,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -110,7 +112,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> searchPosts(String keyword) {
-        return null;
+        List<Post> postList = postRepository.findByTitleContaining(keyword);
+        return postList.stream().map(post -> modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
     }
 
 

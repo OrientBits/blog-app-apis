@@ -3,14 +3,18 @@ package com.orientbits.blogappapis.controllers;
 import com.orientbits.blogappapis.payloads.APIResponse;
 import com.orientbits.blogappapis.payloads.PostDto;
 import com.orientbits.blogappapis.payloads.PostResponse;
+import com.orientbits.blogappapis.services.FileService;
 import com.orientbits.blogappapis.services.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,6 +23,12 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    FileService fileService;
+
+    @Value("${project.image}")
+    private String path;
 
     //create post
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
@@ -37,9 +47,9 @@ public class PostController {
     // get all posts
     @GetMapping("/posts") //Integer pageNo, Integer pageSize
     public ResponseEntity<PostResponse> getPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-                                                  @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+                                                 @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
                                                  @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy) {
-        PostResponse postResponse = postService.getAllPost(pageNumber, pageSize,sortBy);
+        PostResponse postResponse = postService.getAllPost(pageNumber, pageSize, sortBy);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
@@ -53,20 +63,21 @@ public class PostController {
 
     //get post by category
     @GetMapping("/category/{categoryId}/posts")
-    public ResponseEntity<PostResponse> getPostsByCategory(@PathVariable Integer categoryId, @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-                                                           @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize) {
+    public ResponseEntity<PostResponse> getPostsByCategory(
+            @PathVariable Integer categoryId, @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize) {
         PostResponse postResponse = postService.getPostsByCategory(categoryId, pageNumber, pageSize);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
     // get post by user
     @GetMapping("/user/{userId}/posts")
-    public ResponseEntity<PostResponse> getPostsByUser(@PathVariable Integer userId, @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-                                                           @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize) {
+    public ResponseEntity<PostResponse> getPostsByUser(
+            @PathVariable Integer userId, @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize) {
         PostResponse postResponse = postService.getPostsByUser(userId, pageNumber, pageSize);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
-
 
 
     // delete post by id
@@ -79,9 +90,25 @@ public class PostController {
 
     //searching...
     @GetMapping("/posts/search/{keywords}")
-    public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable String keywords){
+    public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable String keywords) {
         List<PostDto> postDtos = postService.searchPosts(keywords);
-        return new ResponseEntity<>(postDtos,HttpStatus.OK);
+        return new ResponseEntity<>(postDtos, HttpStatus.OK);
+    }
+
+
+    // post image upload
+
+    @PostMapping("/post/image/upload/{postId}")
+    public ResponseEntity<PostDto> uploadPostImage(@PathVariable Integer postId, @RequestParam("image")MultipartFile image) throws IOException {
+
+        PostDto post = postService.getPost(postId);
+        String fileName = fileService.uploadImage(path, image);
+        post.setImageName(fileName);
+
+        PostDto updatePost = postService.updatePost(post, postId);
+
+        return new ResponseEntity<>(updatePost,HttpStatus.OK);
+
     }
 
 

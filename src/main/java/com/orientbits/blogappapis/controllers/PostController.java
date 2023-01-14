@@ -102,14 +102,19 @@ public class PostController {
     public ResponseEntity<PostDto> uploadPostImage(@PathVariable Integer postId, @RequestParam("image")MultipartFile image) throws IOException {
 
         PostDto post = postService.getPost(postId);
+
         String fileName = fileService.uploadImage(path, image);
+
+        System.out.println("FileName: "+fileName);
+
         post.setImageName(fileName);
-
         PostDto updatePost = postService.updatePost(post, postId);
-
         return new ResponseEntity<>(updatePost,HttpStatus.OK);
 
     }
+
+    //to serve files
+
 
 
 }

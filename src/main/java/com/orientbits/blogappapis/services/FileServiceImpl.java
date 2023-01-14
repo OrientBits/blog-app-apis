@@ -24,7 +24,7 @@ public class FileServiceImpl implements FileService{
 
         Files.copy(file.getInputStream(), Paths.get(filePath));
 
-        return name;
+        return fileName;
     }
 
     @Override

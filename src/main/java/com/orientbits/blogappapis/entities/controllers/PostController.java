@@ -1,4 +1,4 @@
-package com.orientbits.blogappapis.controllers;
+package com.orientbits.blogappapis.entities.controllers;
 
 import com.orientbits.blogappapis.payloads.APIResponse;
 import com.orientbits.blogappapis.payloads.PostDto;

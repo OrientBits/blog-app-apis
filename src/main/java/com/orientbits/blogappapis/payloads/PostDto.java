@@ -1,11 +1,14 @@
 package com.orientbits.blogappapis.payloads;
 
+import com.orientbits.blogappapis.entities.Comment;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -30,5 +33,7 @@ public class PostDto {
     private CategoryDto category;
 
     private UserDto user;
+
+    private Set<CommentDto> comments = new HashSet<>();
 
 }

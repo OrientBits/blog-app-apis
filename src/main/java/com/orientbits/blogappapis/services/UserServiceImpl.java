@@ -6,6 +6,7 @@ import com.orientbits.blogappapis.payloads.UserDto;
 import com.orientbits.blogappapis.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,9 +20,13 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDto createUser(UserDto userDTO) {
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User newUser = userRepository.save(modelMapper.map(userDTO, User.class));
         return modelMapper.map(newUser, UserDto.class);
     }
@@ -32,7 +37,7 @@ public class UserServiceImpl implements UserService{
 
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setAbout(userDTO.getAbout());
         userRepository.save(user);
 

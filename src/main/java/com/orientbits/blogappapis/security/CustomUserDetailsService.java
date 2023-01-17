@@ -1,4 +1,4 @@
-package com.orientbits.blogappapis.config;
+package com.orientbits.blogappapis.security;
 
 import com.orientbits.blogappapis.entities.User;
 import com.orientbits.blogappapis.exceptions.ResourceNotFoundException;

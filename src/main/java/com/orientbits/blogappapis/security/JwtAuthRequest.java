@@ -1,8 +1,11 @@
 package com.orientbits.blogappapis.security;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class JwtAuthRequest {
     private String username;
     private String password;

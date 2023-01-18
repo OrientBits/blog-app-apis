@@ -57,7 +57,10 @@ public class SecurityConfig { // extends WebSecurityConfigurerAdapter {
         System.out.println("..............Filter chain is running..........");
 
         http.csrf().disable()
-                .authorizeHttpRequests().anyRequest().authenticated()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/login").permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()

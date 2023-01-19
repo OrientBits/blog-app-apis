@@ -33,41 +33,42 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String username = null;
         String token = null;
 
-        if (requestHeader.startsWith("Bearer")){
+        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             token = requestHeader.substring(7);
 
             try {
                 username = jwtTokenHelper.extractUsername(token);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get Jwt token");
-            }catch (ExpiredJwtException e){
+            } catch (ExpiredJwtException e) {
                 System.out.println("Jwt token has expired");
-            }catch (MalformedJwtException e){
+            } catch (MalformedJwtException e) {
                 System.out.println("Invalid jwt token");
             }
-        }else {
-            System.out.println("JWT token does not begin with Bearer");
-        }
-        // validate token
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if (this.jwtTokenHelper.validateToken(token,userDetails)){
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }else {
-                System.out.println("Invalid token");
+            // validate token
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                if (this.jwtTokenHelper.validateToken(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                } else {
+                    System.out.println("Invalid token");
+                }
+
+            } else {
+                System.out.println("Username is null or context is not null");
             }
 
         } else {
-            System.out.println("Username is null or context is not null");
+            System.out.println("JWT token does not begin with Bearer");
         }
 
-        filterChain.doFilter(request,response);
+
+        filterChain.doFilter(request, response);
 
     }
-
 
 
 }

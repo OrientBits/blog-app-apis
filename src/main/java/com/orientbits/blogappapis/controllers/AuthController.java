@@ -31,19 +31,22 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
+    public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest jwtAuthRequest) throws Exception {
         System.out.println("Controller running........");
 
         try {
-            authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(jwtAuthRequest.getUsername(), jwtAuthRequest.getPassword()));
+            System.out.println("Authenticated....");
         }catch (UsernameNotFoundException | BadCredentialsException e) {
             e.printStackTrace();
             throw new Exception("Bad Credential");
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtAuthRequest.getUsername());
         System.out.println("UserDetails: "+userDetails.getUsername());
         System.out.println("UserDetails: "+userDetails.getPassword());
+
+        System.out.println("USER DETAILS: "+userDetails);
 
         String generateToken = jwtTokenHelper.generateToken(userDetails);
         System.out.println("Generated Token: "+generateToken);

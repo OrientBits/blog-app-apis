@@ -58,6 +58,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!--to implement jwt we need to add below 2 dep-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -69,6 +70,7 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.0</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

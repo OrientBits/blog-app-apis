@@ -1,6 +1,6 @@
 package com.orientbits.blogappapis.controllers;
 
-import com.orientbits.blogappapis.payloads.APIResponse;
+import com.orientbits.blogappapis.exceptions.APIResponse;
 import com.orientbits.blogappapis.payloads.CommentDto;
 import com.orientbits.blogappapis.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,13 +1,12 @@
 package com.orientbits.blogappapis.controllers;
 
-import com.orientbits.blogappapis.payloads.APIResponse;
+import com.orientbits.blogappapis.exceptions.APIResponse;
 import com.orientbits.blogappapis.payloads.UserDto;
 import com.orientbits.blogappapis.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

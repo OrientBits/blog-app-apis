@@ -1,4 +1,4 @@
-package com.orientbits.blogappapis.payloads;
+package com.orientbits.blogappapis.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

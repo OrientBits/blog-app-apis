@@ -1,6 +1,6 @@
 package com.orientbits.blogappapis.controllers;
 
-import com.orientbits.blogappapis.payloads.APIResponse;
+import com.orientbits.blogappapis.exceptions.APIResponse;
 import com.orientbits.blogappapis.payloads.PostDto;
 import com.orientbits.blogappapis.payloads.PostResponse;
 import com.orientbits.blogappapis.services.FileService;
@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -115,8 +113,9 @@ public class PostController {
         post.setImageName(fileName);
         PostDto updatePost = postService.updatePost(post, postId);
         return new ResponseEntity<>(updatePost,HttpStatus.OK);
-
     }
+
+
 
     //to serve files
     @GetMapping("/post/image/{imageName}")

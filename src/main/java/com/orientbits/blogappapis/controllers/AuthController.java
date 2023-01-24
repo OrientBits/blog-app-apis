@@ -39,15 +39,10 @@ public class AuthController {
             authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(jwtAuthRequest.getUsername(), jwtAuthRequest.getPassword()));
             System.out.println("Authenticated....");
         }catch (UsernameNotFoundException | BadCredentialsException e) {
-            e.printStackTrace();
-            throw new Exception("Bad Credential");
+            throw new BadCredentialsException("Invalid Password!!");
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(jwtAuthRequest.getUsername());
-        System.out.println("UserDetails: "+userDetails.getUsername());
-        System.out.println("UserDetails: "+userDetails.getPassword());
-
-        System.out.println("USER DETAILS: "+userDetails);
 
         String generateToken = jwtTokenHelper.generateToken(userDetails);
         System.out.println("Generated Token: "+generateToken);

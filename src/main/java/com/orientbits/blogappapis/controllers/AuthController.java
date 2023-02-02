@@ -1,8 +1,11 @@
 package com.orientbits.blogappapis.controllers;
 
+import com.orientbits.blogappapis.exceptions.APIResponse;
+import com.orientbits.blogappapis.payloads.UserDto;
 import com.orientbits.blogappapis.security.JwtAuthRequest;
 import com.orientbits.blogappapis.security.JwtAuthResponse;
 import com.orientbits.blogappapis.security.JwtTokenHelper;
+import com.orientbits.blogappapis.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,9 @@ public class AuthController {
     private UserDetailsService userDetailsService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
@@ -52,4 +58,15 @@ public class AuthController {
 
         return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
+
+
+    @PostMapping("/register")
+    public  ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto){
+
+        UserDto registeredUser = userService.registerNewUser(userDto);
+
+        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+    }
+
+
 }

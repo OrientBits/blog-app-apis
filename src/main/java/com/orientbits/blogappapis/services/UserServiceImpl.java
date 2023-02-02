@@ -1,14 +1,17 @@
 package com.orientbits.blogappapis.services;
 
+import com.orientbits.blogappapis.entities.Role;
 import com.orientbits.blogappapis.entities.User;
 import com.orientbits.blogappapis.exceptions.ResourceNotFoundException;
 import com.orientbits.blogappapis.payloads.UserDto;
+import com.orientbits.blogappapis.repositories.RoleRepository;
 import com.orientbits.blogappapis.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +26,19 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+
+    @Override
+    public UserDto registerNewUser(UserDto userDto) {
+        User user = modelMapper.map(userDto, User.class);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role role = roleRepository.findById(502).get();
+        user.getRoles().add(role);
+        User newUser = userRepository.save(user);
+        return modelMapper.map(newUser,UserDto.class);
+    }
 
     @Override
     public UserDto createUser(UserDto userDTO) {

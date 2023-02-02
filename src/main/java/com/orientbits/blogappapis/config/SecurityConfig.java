@@ -6,6 +6,7 @@ import com.orientbits.blogappapis.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -57,7 +58,8 @@ public class SecurityConfig { // extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/login").permitAll()
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers(HttpMethod.GET).permitAll() //permitting all get methods for public users
                 .anyRequest()
                 .authenticated()
                 .and()

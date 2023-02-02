@@ -1,10 +1,14 @@
 package com.orientbits.blogappapis.payloads;
 
+import com.orientbits.blogappapis.entities.Role;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -23,4 +27,6 @@ public class UserDto {
     private String password;
     @NotEmpty
     private String about;
+
+    private Set<Role> roles = new HashSet<>();
 }

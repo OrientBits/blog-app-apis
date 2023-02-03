@@ -10,12 +10,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -33,12 +36,21 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDto registerNewUser(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleRepository.findById(502).get();
+
+        Role role = roleRepository.findById(501).get();
+
         user.getRoles().add(role);
+
+        System.out.println("USER before 2 : " + user);
+
         User newUser = userRepository.save(user);
-        return modelMapper.map(newUser,UserDto.class);
+
+        System.out.println("NEW USER 3 : " + newUser);
+        return modelMapper.map(newUser, UserDto.class);
     }
+
 
     @Override
     public UserDto createUser(UserDto userDTO) {
@@ -62,7 +74,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto getUserById(Integer userId) {
-        User user = this.userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User","Id",userId));
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         return modelMapper.map(user, UserDto.class);
     }
 

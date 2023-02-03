@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(newUser, UserDto.class);
     }
 
+
     @Override
     public UserDto createUser(UserDto userDTO) {
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));

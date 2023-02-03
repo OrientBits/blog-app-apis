@@ -63,6 +63,8 @@ public class AuthController {
     @PostMapping("/register")
     public  ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto){
 
+        System.out.println("Register controller is running.....");
+
         UserDto registeredUser = userService.registerNewUser(userDto);
 
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);

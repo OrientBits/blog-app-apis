@@ -35,20 +35,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto registerNewUser(UserDto userDto) {
-        User user = modelMapper.map(userDto, User.class);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        try {
+            User userDb = userRepository.findByEmail(userDto.getEmail()).orElseThrow(() -> new ResourceNotFoundException("User", "Email" + userDto.getEmail(), 0));
+            Role role = roleRepository.findById(502).get();
+            userDb.getRoles().add(role);
+            User save = userRepository.save(userDb);
+            return modelMapper.map(save, UserDto.class);
+        } catch (ResourceNotFoundException e) {
+            System.out.println("Error throw: " + e.getMessage());
 
-        Role role = roleRepository.findById(501).get();
+            User user = modelMapper.map(userDto, User.class);
 
-        user.getRoles().add(role);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        System.out.println("USER before 2 : " + user);
+            Role role = roleRepository.findById(502).get();
 
-        User newUser = userRepository.save(user);
+            user.getRoles().add(role);
 
-        System.out.println("NEW USER 3 : " + newUser);
-        return modelMapper.map(newUser, UserDto.class);
+            System.out.println("USER before 2 : " + user);
+
+            User newUser = userRepository.save(user);
+
+            System.out.println("NEW USER 3 : " + newUser);
+            return modelMapper.map(newUser, UserDto.class);
+        }
     }
 
 

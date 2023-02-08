@@ -8,18 +8,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
 import java.util.List;
 
 @SpringBootApplication
 public class BlogAppApisApplication implements CommandLineRunner {
 
     @Autowired
-    private RoleRepository roleRepository;
+    RoleRepository roleRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(BlogAppApisApplication.class, args);
     }
+
 
     @Bean
     public ModelMapper modelMapper() {
@@ -48,6 +48,8 @@ public class BlogAppApisApplication implements CommandLineRunner {
         }catch (Exception e){
 
         }
+
+
 
     }
 }
